@@ -1,0 +1,70 @@
+<!--Hadoop YARN (Yet Another Resource Negotiator) 框架的核心配置文件，定义了 YARN 集群的资源管理和应用程序调度的行为，是配置 ResourceManager 和 NodeManager 的关键。-->
+<!--必要配置：yarn.resourcemanager.hostname（指定 ResourceManager 所在的主机名。ResourceManager 是 YARN 的中央协调器，客户端和 NodeManager 都需要知道它的位置。在高可用 (HA) 环境下，你需要配置多个 ResourceManager 及其各自的地址（例如 yarn.resourcemanager.ha.rm-ids、yarn.resourcemanager.hostname.rm1 等），并通常结合 ZooKeeper。）、yarn.nodemanager.aux-services（定义 NodeManager 运行的辅助服务。mapreduce_shuffle 是 MapReduce 应用程序必需的辅助服务，它负责在 Map 和 Reduce 阶段之间的数据混洗（shuffle）。）、yarn.nodemanager.aux-services.mapreduce.shuffle.class（指定 mapreduce_shuffle 辅助服务使用的具体实现类。）-->
+
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+        <description>The auxiliary services that are enabled for NodeManager.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+        <description>The class of the auxiliary service.</description>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>192.168.56.101</value> <description>The hostname of the ResourceManager.</description>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>192.168.56.101:8088</value> <description>The address of the ResourceManager web application.</description>
+    </property>
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+        <description>Whether to enable log aggregation.</description>
+    </property>
+    <property>
+        <name>yarn.log-aggregation.retain-seconds</name>
+        <value>604800</value> <description>How long to retain aggregated logs on HDFS.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>2048</value> <description>Physical memory available for containers, in MB.</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>4</value> <description>Number of CPU cores available for containers.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>128</value> <description>Minimum memory allocation for containers.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>2048</value> <description>Maximum memory allocation for containers.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-vcores</name>
+        <value>1</value> <description>Minimum CPU virtual cores allocation for containers.</description>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-vcores</name>
+        <value>2</value> <description>Maximum CPU virtual cores allocation for containers.</description>
+    </property>
+</configuration>

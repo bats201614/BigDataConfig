@@ -1,0 +1,45 @@
+<!--定义了 Hadoop 的全局默认行为和参数。所有 Hadoop 应用程序都会读取这个文件来获取集群的基本设置。-->
+<!--必要配置：fs.defaultFS（指定了 Hadoop 默认使用的文件系统 URI（统一资源标识符），告诉 Hadoop 客户端以及其他大数据组件，如 Hive、Spark在哪里找到 HDFS NameNode。）、hadoop.tmp.dir（如果不设置，Hadoop 默认会使用 /tmp 目录。然而，/tmp 目录在系统重启时通常会被清理，这会导致 NameNode 的元数据丢失，从而集群数据丢失。因此，务必将其设置为一个持久化的目录，并且确保 Hadoop 用户对该目录有读写权限。）-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://192.168.56.101:8020</value> <description>NameNode URI. This specifies the default file system used by Hadoop.</description>
+   </property>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/opt/hadoop/hadoop/tmp</value> <description>A base for other temporary directories. Must be configured to prevent data loss on reboot.</description>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.hadoop.hosts</name>
+    <value>*</value> <description>
+        Allows 'hadoop' user to impersonate users from any host (or specific host).
+        This is the host from which the proxy user is allowed to impersonate users.
+    </description>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.hadoop.groups</name>
+    <value>*</value> <description>
+        Allows 'hadoop' user to impersonate users belonging to any group (or specific groups).
+        This is the group of the user which the proxy user is allowed to impersonate.
+    </description>
+  </property>
+</configuration>

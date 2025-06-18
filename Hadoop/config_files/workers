@@ -1,0 +1,6 @@
+# Hadoop集群中配置 Datanode 和 NodeManager 的主机名列表，每个每个主机名占一行
+# 确保这里列出的主机名与 /etc/hosts 文件中的映射一致，且能通过 SSH 免密登录。
+
+node1
+node2
+node3

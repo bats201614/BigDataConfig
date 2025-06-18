@@ -1,0 +1,44 @@
+<!-- Hadoop 集群中专门用于配置 MapReduce 框架 的文件，主要作用就是告诉 MapReduce 框架它应该如何在 YARN 上运行，以及 JobHistoryServer 的相关配置。 -->
+<!-- 必要配置： mapreduce.framework.name （指定 MapReduce 框架运行的环境，在现代 Hadoop 集群中，通常会将其设置为 yarn，这意味着 MapReduce 作业将作为 YARN 应用程序提交和执行。）、mapreduce.jobhistory.address（配置 JobHistoryServer 的 RPC 地址和端口。MapReduce 应用程序会向这个地址发送作业历史数据。）、mapreduce.jobhistory.done-dir 和 mapreduce.jobhistory.intermediate-done-dir（指定已完成的 MapReduce 作业历史文件在 HDFS 上的存储目录；指定正在运行的 MapReduce 作业历史文件在 HDFS 上的临时存储目录。）-->
+
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+        <description>The framework used to run MapReduce jobs.</description>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.address</name>
+	    <value>node1:10020</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.webapp.address</name>
+	    <value>node1:19888</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.done-dir</name>
+	    <value>/data/mr-history/done</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.intermediate-done-dir</name>
+	    <value>/data/mr-history/tmp</value>
+    </property>
+</configuration>
