@@ -1,5 +1,7 @@
 <!--Hadoop YARN (Yet Another Resource Negotiator) 框架的核心配置文件，定义了 YARN 集群的资源管理和应用程序调度的行为，是配置 ResourceManager 和 NodeManager 的关键。-->
 <!--必要配置：yarn.resourcemanager.hostname（指定 ResourceManager 所在的主机名。ResourceManager 是 YARN 的中央协调器，客户端和 NodeManager 都需要知道它的位置。在高可用 (HA) 环境下，你需要配置多个 ResourceManager 及其各自的地址（例如 yarn.resourcemanager.ha.rm-ids、yarn.resourcemanager.hostname.rm1 等），并通常结合 ZooKeeper。）、yarn.nodemanager.aux-services（定义 NodeManager 运行的辅助服务。mapreduce_shuffle 是 MapReduce 应用程序必需的辅助服务，它负责在 Map 和 Reduce 阶段之间的数据混洗（shuffle）。）、yarn.nodemanager.aux-services.mapreduce.shuffle.class（指定 mapreduce_shuffle 辅助服务使用的具体实现类。）-->
+<!--推荐配置：yarn.resourcemanager.webapp.address（配置 ResourceManager 的 Web UI 访问地址和端口，用于通过浏览器监控 YARN 集群的资源使用情况、应用程序列表等。默认端口： 8088）、yarn.log-aggregation-enable和yarn.log-aggregation.retain-seconds（启用日志聚合功能。当应用程序容器运行结束后，其日志文件会被聚合并上传到 HDFS，方便通过 JobHistoryServer 或 YARN Web UI 查看完整的应用日志。这对于故障排查和调试至关重要。）、yarn.nodemanager.resource.memory-mb 和 yarn.nodemanager.resource.cpu-vcores（ 定义每个 NodeManager 节点可以为 YARN 应用程序提供的总内存和总 CPU 虚拟核数。这是 YARN 进行资源分配的依据。根据你的物理节点配置来设置）、
+yarn.scheduler.minimum-allocation-mb, yarn.scheduler.maximum-allocation-mb, yarn.scheduler.minimum-allocation-vcores 和 yarn.scheduler.maximum-allocation-vcores（定义 YARN 容器可以申请的最小和最大内存/CPU 资源。所有容器的资源请求都必须是 minimum-allocation 的整数倍，且不能超过 maximum-allocation。）-->
 
 <?xml version="1.0"?>
 <!--

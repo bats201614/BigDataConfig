@@ -172,6 +172,7 @@ sudo apt install -y openjdk-11-jdk #版本自行选择
 - 配置 JAVA_HOME 环境变量：通常在`/etc/profile`或用户的主目录下的`.bashrc`文件中配置。
 ```bash
 # /etc/profile 或 ~/.bashrc
+# 可以配置软链接以方便查找路径
 export JAVA_HOME=/usr/lib/jvm/jdk_21 # 实际路径可能不同，请根据你的安装路径修改
 export PATH=$PATH:$JAVA_HOME/bin
 ```

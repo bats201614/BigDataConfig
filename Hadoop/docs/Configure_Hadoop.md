@@ -1,10 +1,10 @@
 # Hadoop 集群部署与配置
-## 1. 下载与解压Hadoop
+## 1. 下载Hadoop
 - 从 Apache 官方网站下载稳定版本的 Hadoop 二进制包:{https://hadoop.apache.org/releases.html}
   - Windows下载：下载binary格式并上传至Linux中解压
   - Linux下载：在命令行中使用`wget`命令下载：
     ```bash
-    wget https://dlcdn.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz` # 速度较慢
+    wget https://dlcdn.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz # 速度较慢
     ```
 
 ## 2. 解压到指定目录
@@ -13,12 +13,13 @@
 sudo su - hadoop #切换至专门用户，后续操作同理
 tar -zxvf hadoop-3.4.1.tar.gz -C /opt/
 mv /opt/hadoop-3.4.1 /opt/hadoop # 重命名为hadoop，方便管理
+ln -s /opt/hadoop-3.4.1 /opt/hadoop # 或创建软链接
 ```
 
 ## 3. 修改权限
 - 将 Hadoop 目录的所有权赋给运行 Hadoop 的用户。
 ```bash
-chown -R hadoop:hadoop /opt/hadoop
+sudo chown -R hadoop:hadoop /opt/hadoop
 ```
 
 ## 4. 配置Hadoop环境变量

@@ -1,5 +1,6 @@
 <!--定义了 Hadoop 的全局默认行为和参数。所有 Hadoop 应用程序都会读取这个文件来获取集群的基本设置。-->
 <!--必要配置：fs.defaultFS（指定了 Hadoop 默认使用的文件系统 URI（统一资源标识符），告诉 Hadoop 客户端以及其他大数据组件，如 Hive、Spark在哪里找到 HDFS NameNode。）、hadoop.tmp.dir（如果不设置，Hadoop 默认会使用 /tmp 目录。然而，/tmp 目录在系统重启时通常会被清理，这会导致 NameNode 的元数据丢失，从而集群数据丢失。因此，务必将其设置为一个持久化的目录，并且确保 Hadoop 用户对该目录有读写权限。）-->
+<!--推荐配置：hadoop.proxyuser.hadoop.hosts和hadoop.proxyuser.hadoop.groups（配置代理用户规则与代理用户组，允许 hadoop 这个用户作为代理用户，从任何一个地方（服务器、IP）发起请求来模拟 Hadoop 集群中的其他用户。在测试或内部环境中为了方便可以设置为 *，但在生产环境中，出于安全考虑，通常会指定具体的受信任主机或 IP 范围，以限制可以发起模拟请求的来源。）-->
 
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>

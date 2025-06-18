@@ -36,7 +36,7 @@
 # This value will be overridden by an Xmx setting specified in either
 # HADOOP_OPTS and/or YARN_RESOURCEMANAGER_OPTS.
 # Default is the same as HADOOP_HEAPSIZE_MAX
-#export YARN_RESOURCEMANAGER_HEAPSIZE=
+export YARN_RESOURCEMANAGER_HEAPSIZE="2048"
 
 # Specify the JVM options to be used when starting the ResourceManager.
 # These options will be appended to the options specified as HADOOP_OPTS
@@ -70,7 +70,7 @@
 # This value will be overridden by an Xmx setting specified in either
 # HADOOP_OPTS and/or YARN_NODEMANAGER_OPTS.
 # Default is the same as HADOOP_HEAPSIZE_MAX.
-#export YARN_NODEMANAGER_HEAPSIZE=
+export YARN_NODEMANAGER_HEAPSIZE="1024"
 
 # Specify the JVM options to be used when starting the NodeManager.
 # These options will be appended to the options specified as HADOOP_OPTS

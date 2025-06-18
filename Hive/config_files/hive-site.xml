@@ -1,0 +1,62 @@
+<!--Apache Hive 的核心配置文件，它定义了 Hive 如何与 Hadoop 集群交互、如何存储元数据以及各种服务的行为，是配置 Hive 时最重要的一个文件。-->
+<!--必要配置：javax.jdo.option.ConnectionURL（JDBC 连接字符串，指向你的 Metastore 数据库。）、javax.jdo.option.ConnectionDriverName（ 数据库的 JDBC 驱动类名，示例 (MySQL 8.x): <value>com.mysql.cj.jdbc.Driver</value>）、javax.jdo.option.ConnectionUserName（连接 Metastore 数据库的用户名。）、javax.jdo.option.ConnectionPassword（连接 Metastore 数据库的密码。）、hive.execution.engine（指定 Hive 查询的执行引擎。常用值:
+tez: (推荐用于 Hive 3.x 及更高版本) Hive On Tez 引擎，性能优于 MapReduce。
+mr: (MapReduce, 逐渐废弃) 在 YARN 上运行 MapReduce 作业。
+spark: Hive On Spark 引擎，需要额外配置 Spark 环境。）、hive.metastore.warehouse.dir（Hive 数据库和表在 HDFS 上的默认存储根目录。）-->
+<!--推荐配置：hive.server2.thrift.bind.host（HiveServer2 绑定的主机名或 IP 地址。0.0.0.0 表示监听所有网络接口。）、hive.server2.thrift.port（HiveServer2 监听的 Thrift 端口，默认值: 10000）、hive.server2.webui.port（HiveServer2 Web UI 的端口，默认值: 10002）、hive.metastore.uris（如果 Metastore 是独立服务，这里填写其 Thrift URI。客户端和 HiveServer2 将连接到此 URI。）、hive.log.dir（ Hive 服务的日志文件存储目录，与env里类似）-->
+
+<configuration>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://192.168.56.101:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Asia/Shanghai</value> <description>JDBC connect string for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.cj.jdbc.Driver</value>
+    <description>Driver class name for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>hive</value> <description>Username to use against metastore database</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>201614</value> <description>Password to use against metastore database</description>
+  </property>
+
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+    <description>location of default database for the warehouse</description>
+  </property>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://192.168.56.101:9083</value>
+  </property>
+
+  <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>192.168.56.101</value> <description>Host on which the HiveServer2 Thrift server will bind.</description>
+  </property>
+  <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+    <description>Port number of HiveServer2 Thrift server.</description>
+  </property>
+  <property>
+    <name>hive.server2.webui.host</name>
+    <value>192.168.56.101</value>
+    <description>Host on which the HiveServer2 Web UI will bind.</description>
+  </property>
+  <property>
+    <name>hive.server2.webui.port</name>
+    <value>10002</value>
+    <description>Port number of HiveServer2 Thrift server.</description>
+  </property>
+
+  <property>
+    <name>hive.execution.engine</name>
+    <value>tez</value>
+    <description>Chooses the query execution engine. 'mr' for MapReduce is default and compatible, 'tez' is faster, 'spark' uses Spark.</description>
+  </property>
+</configuration>

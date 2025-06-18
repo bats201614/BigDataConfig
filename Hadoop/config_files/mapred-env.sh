@@ -1,5 +1,5 @@
 # Hadoop MapReduce 框架的环境变量配置文件，主要用于设置 MapReduce 相关守护进程（尤其是 JobHistoryServer）的运行时环境变量，例如 JVM 内存选项。
-# 推荐配置：HADOOP_MAPRED_HEAPSIZE（控制 JobHistoryServer 守护进程的 JVM 堆内存大小，JobHistoryServer 负责存储和查询 MapReduce 作业的历史信息）、HADOOP_JOB_HISTORYSERVER_HEAPSIZE（默认从hadoop-env.sh中的HADOOP_HEAPSIZE_MAX继承，专门用于设置 JobHistoryServer 进程堆内存的变量，设置后会覆盖 HADOOP_MAPRED_HEAPSIZE 的通用设置。）
+# 推荐配置：HADOOP_JOB_HISTORYSERVER_HEAPSIZE（默认从hadoop-env.sh中的HADOOP_HEAPSIZE_MAX继承，专门用于设置 JobHistoryServer 进程堆内存的变量，设置后会覆盖 HADOOP_MAPRED_HEAPSIZE 的通用设置。）
 
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with

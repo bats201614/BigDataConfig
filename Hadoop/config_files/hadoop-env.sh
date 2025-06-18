@@ -1,5 +1,6 @@
 # 主要用于设置 Hadoop 运行所依赖的全局环境变量。
 # 必要配置：JAVA_HOME（jdk安装目录）
+# 推荐配置：HADOOP_HEAPSIZE_MAX 和 HADOOP_HEAPSIZE_MIN （控制 Hadoop 守护进程（如 NameNode, DataNode, ResourceManager, NodeManager）的 JVM 堆内存大小。适当的堆内存设置可以提高性能，防止内存溢出。）
 
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -78,14 +79,14 @@ export LANG=en_US.UTF-8
 # prefer any Xmx setting in their respective _OPT variable.
 # There is no default; the JVM will autoscale based upon machine
 # memory size.
-# export HADOOP_HEAPSIZE_MAX=
+export HADOOP_HEAPSIZE_MAX="2048"
 
 # The minimum amount of heap to use (Java -Xms).  If no unit
 # is provided, it will be converted to MB.  Daemons will
 # prefer any Xms setting in their respective _OPT variable.
 # There is no default; the JVM will autoscale based upon machine
 # memory size.
-# export HADOOP_HEAPSIZE_MIN=
+export HADOOP_HEAPSIZE_MIN="1024"
 
 # Enable extra debugging of Hadoop's JAAS binding, used to set up
 # Kerberos security.

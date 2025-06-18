@@ -1,5 +1,6 @@
 <!-- Hadoop 集群中专门用于配置 HDFS (Hadoop Distributed File System) 服务的核心文件，定义了 HDFS NameNode 和 DataNode 的行为，包括数据存储、副本策略、Web UI 端口等。 -->
-<!-- 必要配置：dfs.replication（指定 HDFS 中文件块的默认副本数量。）、dfs.namenode.name.dir 或 dfs.namenode.name.dirs（指定 NameNode 存储其元数据（文件系统树、文件到数据块的映射等）的本地文件系统路径。这是 HDFS 的“大脑”，其数据至关重要，建议至少配置两个不同的物理磁盘目录，以提高容错性，用逗号分隔。）、dfs.datanode.data.dir 或 dfs.datanode.data.dirs（ 指定 DataNode 存储 HDFS 数据块的本地文件系统路径。）-->
+<!-- 必要配置：dfs.replication（指定 HDFS 中文件块的默认副本数量。）、dfs.namenode.name.dir（指定 NameNode 存储其元数据（文件系统树、文件到数据块的映射等）的本地文件系统路径。这是 HDFS 的“大脑”，其数据至关重要，建议至少配置两个不同的物理磁盘目录，以提高容错性，用逗号分隔。）、dfs.datanode.data.dir（ 指定 DataNode 存储 HDFS 数据块的本地文件系统路径。）-->
+<!-- 推荐配置：dfs.namenode.http-address 和 dfs.namenode.https-address（配置 NameNode 的 Web UI 访问地址和端口，用于通过浏览器监控 HDFS 集群状态。Hadoop 3.x 默认端口：9870）、dfs.namenode.rpc-address（指定 NameNode 接受客户端和 DataNode RPC (Remote Procedure Call) 请求的地址和端口。Hadoop 2.x 和 3.x 默认端口都是 8020）-->
 
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -34,5 +35,15 @@
     <name>dfs.replication</name>
     <value>3</value> 
     <description>Default block replication. The actual number of replications can be specified when the files are created.</description>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address</name>
+    <value>node1:9870</value>
+    <description>The address and port where the NameNode Web UI listens.</description>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address</name>
+    <value>node1:8020</value>
+    <description>The RPC address for clients to connect to the NameNode.</description>
   </property>
 </configuration>
