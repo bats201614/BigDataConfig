@@ -1,5 +1,5 @@
 # Hadoop 集群部署与配置
-## 1. 下载Hadoop
+## 1. 下载 Hadoop
 - 从 Apache 官方网站下载稳定版本的 Hadoop 二进制包:{https://hadoop.apache.org/releases.html}
   - Windows下载：下载binary格式并上传至Linux中解压
   - Linux下载：在命令行中使用`wget`命令下载：
@@ -22,7 +22,7 @@ ln -s /opt/hadoop-3.4.1 /opt/hadoop # 或创建软链接
 sudo chown -R hadoop:hadoop /opt/hadoop
 ```
 
-## 4. 配置Hadoop环境变量
+## 4. 配置 Hadoop 环境变量
 - 编辑 /etc/profile 或用户 .bashrc：
 ```bash
 # /etc/profile 或 ~/.bashrc，根据权限最小化原则推荐~/.bashrc
@@ -52,7 +52,7 @@ scp -r /opt/hadoop/etc/hadoop/ hadoop@node2:/opt/hadoop/etc/hadoop/ # 修改主�
 rsync -avz /opt/hadoop/etc/hadoop/ hadoop@node3:/opt/hadoop/etc/hadoop/  
 ```
 
-## 6. 启动Hadoop
+## 6. 启动 Hadoop
 - 格式化 HDFS NameNode（**仅在首次部署或重建集群时执行此操作。此操作会删除 HDFS 中的所有数据！**）：
 ```bash
 hdfs namenode -format # 成功后会看到successfully formatted字样。
