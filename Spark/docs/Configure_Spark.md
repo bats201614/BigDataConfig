@@ -193,7 +193,7 @@ sudo systemctl restart hadoop-nodemanager.service
   - 下载与你 Spark 包中集成的 Hadoop 版本相匹配的 winutils.exe 和 hadoop.dll。例如，如果 Spark 是 bin-hadoop3.3，就去下载 Hadoop 3.3.x 的 winutils.exe，通常在 GitHUb 上下载，下载bin 文件夹下的所有文件。
   - 创建 HADOOP_HOME 目录，例如 C:\hadoop\bin，将你下载的 winutils.exe、hadoop.dll 以及其他可能有的 .jar 文件复制到 C:\hadoop\bin 目录中。
   - 在系统环境变量中新建 HADOOP_HOME，值为 C:\hadoop，并将 %HADOOP_HOME%\bin 添加到 Path 环境变量中。
-- Python PySpark 脚本
+- **Python PySpark 脚本**
   - 在你的 Python PySpark 脚本中，你需要创建 SparkSession 时指定 Master URL。
   ```python
   from pyspark.sql import SparkSession
