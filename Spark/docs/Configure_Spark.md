@@ -177,3 +177,63 @@ sudo systemctl restart hadoop-nodemanager.service
 # $HADOOP_HOME/sbin/yarn-daemon.sh restart nodemanager
 ```
 > 最后，在 Spark 的 spark-defaults.conf 文件中，你需要明确告诉 Spark 应用程序使用外部 Shuffle Service，如配置spark.shuffle.service.enabled为True等等。
+
+## 附：Windows本地使用 Python IDE ( PyCharm, VS Code 等) 进行 PySpark 开发
+- 这种情况下，Windows 机器扮演的是 PySpark 客户端的角色，它负责编写和提交代码，而实际的分布式计算则发生在 Linux 的 Spark 集群。
+- **JDK 详细配置需求**：
+  - 下载并安装 JDK： 下载 Adoptium OpenJDK 的稳定版本（如 JDK 8 或 JDK 11），按照安装向导进行。
+  - 在系统环境变量中新建 JAVA_HOME，值为你的 JDK 安装路径（例如 C:\Program Files\Java\jdk-11.0.12），并将 %JAVA_HOME%\bin 添加到 Path 环境变量中。
+  - 验证： 打开 CMD/PowerShell，运行 java -version 和 javac -version
+- **Spark 详细配置需求**
+  - 选择与你 Linux 上 Spark 版本相近或相同的预编译包，并确保它包含 Hadoop 依赖（例如，Spark 3.5.1 for Hadoop 3.3 and later），下载 spark-*-bin-hadoop*.tgz 文件。
+  - 将 .tgz 文件解压到你喜欢的路径，例如 C:\spark\spark-3.5.1-bin-hadoop3。
+  - 在系统环境变量中新建 SPARK_HOME，值为你的 Spark 解压路径（例如 C:\spark\spark-3.5.1-bin-hadoop3），并将 %SPARK_HOME%\bin 添加到 Path 环境变量中。
+- **下载和配置 Hadoop winutils.exe**
+  - 这是 Windows 环境下 Spark 和 Hadoop 兼容性的关键。它允许 Spark Driver 在 Windows 上执行一些 HDFS 相关的操作（尽管只是模拟本地）。
+  - 下载与你 Spark 包中集成的 Hadoop 版本相匹配的 winutils.exe 和 hadoop.dll。例如，如果 Spark 是 bin-hadoop3.3，就去下载 Hadoop 3.3.x 的 winutils.exe，通常在 GitHUb 上下载，下载bin 文件夹下的所有文件。
+  - 创建 HADOOP_HOME 目录，例如 C:\hadoop\bin，将你下载的 winutils.exe、hadoop.dll 以及其他可能有的 .jar 文件复制到 C:\hadoop\bin 目录中。
+  - 在系统环境变量中新建 HADOOP_HOME，值为 C:\hadoop，并将 %HADOOP_HOME%\bin 添加到 Path 环境变量中。
+- Python PySpark 脚本
+  - 在你的 Python PySpark 脚本中，你需要创建 SparkSession 时指定 Master URL。
+  ```python
+  from pyspark.sql import SparkSession
+
+  # 替换为你的 Linux IP 或主机名 和 Spark Master 端口
+  # 如果你的虚拟机主机名是 node1，并且 Spark Master 运行在默认的 7077 端口
+  spark_master_url = "spark://node1:7077"
+
+  # 如果你希望应用程序在日志中以特定名称显示在 Spark Web UI 上
+  app_name = "MyPySparkAppOnWindows"
+
+  # 创建 SparkSession
+  spark = SparkSession.builder \
+      .appName(app_name) \
+      .master(spark_master_url) \
+      .config("spark.executor.memory", "2g") # 为 Executor 分配内存
+      .config("spark.executor.cores", "2")   # 为 Executor 分配 CPU 核数
+      .config("spark.driver.host", "<你的Windows主机IP>") # 告诉Executor如何连接回Windows Driver
+      .config("spark.driver.port", "随机空闲端口，比如 开放一个端口给 Executor 回连") # 随机空闲端口
+      .getOrCreate()
+
+  # 示例：在 PySpark 中读取 HDFS 文件
+  # 确保你的 Linux 虚拟机上的 NameNode 可达，并且文件路径正确
+  # HDFS NameNode RPC 端口通常是 8020 (Hadoop 3.x) 或 9000 (Hadoop 2.x)
+  # 如果你在 Linux VM 上配置了 HDFS，假设 NameNode 在 node1:8020
+  try:
+      df = spark.read.text("hdfs://node1:8020/user/hadoop/sample.txt")
+      df.show()
+      print(f"Number of lines: {df.count()}")
+
+  except Exception as e:
+      print(f"An error occurred: {e}")
+
+  finally:
+      # 停止 SparkSession
+      spark.stop()
+  ```
+
+- 常见问题及排查
+  - **Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext**：检查 JAVA_HOME 和 SPARK_HOME 环境变量是否正确设置；检查 Path 环境变量中是否包含了 %JAVA_HOME%\bin 和 %SPARK_HOME%\bin；检查你是否安装了 pyspark Python 库；检查 HADOOP_HOME 和 winutils.exe 是否配置正确。
+  - **Connection refused 到 Spark Master (spark://node1:7077)**：检查你的 Linux 虚拟机上的 Spark Master 是否正在运行；检查 Windows 机器是否能 ping node1；检查 Linux 虚拟机的防火墙是否开放了 7077 端口。
+  - **Connection refused 到 Windows Driver (spark.driver.host:spark.driver.port)**：这通常是 Executor 无法回连 Driver 的问题，确保 spark.driver.host 配置的是你 Windows 机器的正确 IP 地址；检查 Windows 防火墙是否阻止了 Executor 到 Driver 端口的连接。
+  - **HDFS 访问问题 (FileNotFoundException 等)**：检查 hdfs:// 路径中的 NameNode 地址和端口是否正确；确保 HDFS NameNode 在 Linux 虚拟机上正在运行；检查 Linux 虚拟机的防火墙是否开放了 NameNode 的 RPC 端口（通常是 8020 或 9000）。
