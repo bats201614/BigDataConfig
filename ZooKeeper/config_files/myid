@@ -1,0 +1,4 @@
+# 在每个 ZooKeeper 节点的 dataDir 目录下（例如 /data/zookeeper/data）创建一个名为 myid 的文件，该文件只包含一个数字，这个数字就是该服务器在 zoo.cfg 中 server.X 配置的 X 值，这个 ID 在整个 ZooKeeper 集群中必须是唯一的，ZooKeeper 服务器启动时会读取 myid 文件来识别自己在集群中的身份。没有这个文件或者内容不正确，服务器将无法正常加入集群。
+# 例如：在 node1 的 /data/zookeeper/data/myid 文件中写入：1
+
+1

@@ -58,12 +58,14 @@ rsync -avz /opt/hadoop/etc/hadoop/ hadoop@node3:/opt/hadoop/etc/hadoop/
 hdfs namenode -format # 成功后会看到successfully formatted字样。
 ```
 
+
+
+## 7. 验证
 - 启动 HDFS 服务（主节点）：
 ```bash
 start-dfs.sh # 启动 NameNode 和所有 DataNode。
 ```
-
-- 验证：
+- HDFS 验证：
   - 使用`jps`命令在主节点上查看是否有`NameNode`和`SecondaryNameNode`进程。
   - 在从节点上查看是否有`DataNode`进程。
   - 访问 NameNode Web UI：`http://hadoop-master:9870`（或你的 NameNode IP:9870）,检查 DataNodes 列表是否显示所有从节点。
@@ -72,7 +74,7 @@ start-dfs.sh # 启动 NameNode 和所有 DataNode。
 start-yarn.sh # 启动 ResourceManager 和所有 NodeManager。
 ```
 
-- 验证：
+- YARN 验证：
   - 使用`jps`命令在主节点上查看是否有`ResourceManager`进程。
   - 在从节点上查看是否有`NodeManager`进程。
   - 访问 ResourceManager Web UI：`http://hadoop-master:8088`（或你的 ResourceManager IP:8088）,检查 Clusters 页面是否显示正确的 NodeManager 数量。

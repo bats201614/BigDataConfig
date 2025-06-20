@@ -69,7 +69,7 @@ pip install pyspark numpy pandas scikit-learn  # 示例，安装你所需要的�
 > 注意需要更改或复制 spark-env.sh.template 和 spark-defaults.conf.template 为 spark-env.sh 和 spark-defaults.conf。StandAlone 或 HA 模式下需配置 workers 文件。
 - 修改完成后通过`scp`命令分发到所有从节点上：
 ```bash
-# 假设用户为spark，节点为node2，是spark目录为/opt/spark
+# 假设用户为spark，节点为node2，spark目录为/opt/spark
 scp -r /opt/spark/conf/ spark@node2:/opt/spark/conf/ # 修改主机以分发到后续节点
 
 # 下述命令用于后续修改文件后同步，只会同步修改的文件，更轻量化
