@@ -1,7 +1,7 @@
 #  Apache Spark 的环境变量配置文件，主要用于设置 Spark 运行时的环境参数，特别是与 Java、Hadoop 和 YARN 集成相关的环境变量。这个文件在 Spark 服务启动和应用程序提交时会被加载。
 # 必要配置：JAVA_HOME（指定 Spark 运行所使用的 Java Development Kit (JDK) 的安装路径。Spark 是一个基于 JVM 的应用程序，所以它需要知道 Java 的位置。）、HADOOP_HOME（指定 Hadoop 的安装路径。Spark 在 YARN 模式下运行时，需要通过 HADOOP_HOME 来找到 Hadoop 相关的库和二进制文件，以便与 HDFS（文件存储）和 YARN（资源管理）进行交互。）、YARN_CONF_DIR（指定 YARN 配置文件的位置。当 Spark 应用程序以 YARN 模式（spark.master yarn）运行时，它需要读取 YARN 的配置文件（如 yarn-site.xml、core-site.xml）来了解 ResourceManager 的地址、容器内存限制等信息。）
 # 推荐配置：PYSPARK_PYTHON 和 PYSPARK_DRIVER_PYTHON（必需，如果使用 PySpark，指定 PySpark 使用的 Python 解释器路径）、SPARK_DRIVER_MEMORY 和 SPARK_EXECUTOR_MEMORY（设置 Spark Driver 和 Executor 的默认 JVM 堆内存）
-# StandAlone模式下：需配置 SPARK_MASTER_HOST（指定 Spark Master 节点的主机名或 IP 地址）、SPARK_MASTER_PORT（指定 Spark Master 进程监听的端口号）、SPARK_MASTER_WEBUI_PORT（指定 Spark Master Web UI 监听的端口号）、SPARK_WORKER_CORES（指定 每个 Spark Worker 节点分配给 Spark 应用程序使用的 CPU 核数总和）、SPARK_WORKER_MEMORY（每个 Spark Worker 节点分配给 Spark 应用程序使用的总内存量）、SPARK_WORKER_PORT（Spark Worker 进程监听的端口号）、SPARK_WORKER_WEBUI_PORT（Spark Worker Web UI 监听的端口号）
+# StandAlone或HA模式下：需配置 SPARK_MASTER_HOST（指定 Spark Master 节点的主机名或 IP 地址）、SPARK_MASTER_PORT（指定 Spark Master 进程监听的端口号）、SPARK_MASTER_WEBUI_PORT（指定 Spark Master Web UI 监听的端口号）、SPARK_WORKER_CORES（指定 每个 Spark Worker 节点分配给 Spark 应用程序使用的 CPU 核数总和）、SPARK_WORKER_MEMORY（每个 Spark Worker 节点分配给 Spark 应用程序使用的总内存量）、SPARK_WORKER_PORT（Spark Worker 进程监听的端口号）、SPARK_WORKER_WEBUI_PORT（Spark Worker Web UI 监听的端口号）、SPARK_DAEMON_JAVA_OPTS（如果使用HA模式，指定Zookeeper连接字符串，如"-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=node1:2181,node2:2181,node3:2181 -Dspark.deploy.zookeeper.dir=/spark/maste"）
 
 #!/usr/bin/env bash
 
